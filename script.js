@@ -7,17 +7,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Retrieve saved username
     const savedUsername = localStorage.getItem("username");
+	const savedPassword = localStorage.getItem("password");
 
-    if (savedUsername) {
+    if (savedUsername && savedPassword) {
         existingButton.style.display = "block";
-        usernameInput.value = savedUsername;  // Pre-fill username
-        rememberCheckbox.checked = true;  // Auto-check "Remember Me"
+        usernameInput.value = savedUsername;  
+		passwordInput.value = savedPassword;
     }
 
     document.getElementById("loginForm").addEventListener("submit", function (event) {
         event.preventDefault();
         const username = usernameInput.value.trim();
         const password = passwordInput.value.trim();
+		const rememberMe = rememberCheckbox.checked;
 
         // Check for empty input
         if (!username || !password) {
@@ -27,11 +29,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         alert("Logged in as " + username);
 
-        if (rememberCheckbox.checked) {
+        if (rememberMe) {
             localStorage.setItem("username", username);
+			localStorage.setItem('password', password);
             existingButton.style.display = "block";
         } else {
             localStorage.removeItem("username");
+			localStorage.removeItem('password');
             existingButton.style.display = "none";
         }
     });
